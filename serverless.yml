@@ -1,0 +1,24 @@
+service:
+  name: tor-layer
+
+provider:
+  name: aws
+  profile: ${opt:profile, ''}
+  region: ap-northeast-1
+  stage: production
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
+layers:
+  tor:
+    package:
+      artifact: context-amazon-linux-2.zip
+
+resources:
+  Outputs:
+    TorLayerExport:
+      Value:
+        Ref: TorLambdaLayer
+      Export:
+        Name: TorLambdaLayer
